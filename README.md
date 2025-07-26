@@ -1,205 +1,111 @@
-# 🕵️‍♂️ Fraud Detection Using Machine Learning & SHAP
+# 🕵️‍♂️ Fraud Detection Project
 
-This project tackles the problem of fraud detection using transaction and behavioral data. We preprocess the data, engineer features, apply class balancing (SMOTE), train and compare multiple models, and interpret predictions using SHAP (SHapley Additive exPlanations).
+This project applies machine learning to detect fraudulent transactions using anonymized user data and transactional behavior. The pipeline includes data cleaning, exploratory data analysis (EDA), model training, performance evaluation, and model interpretability using SHAP.
 
 ---
 
 ## 📁 Project Structure
 
-```bash
 fraud_detection_project/
-│
-├── data/                        # Raw input data
-├── outputs/
-│   ├── data/                    # Cleaned and processed datasets
-<<<<<<< HEAD
-│   ├── figures/                 # Visualizations (EDA, SHAP)
-=======
-│   ├── figures/ outputs/
-└── figures/
-    ├── age_distribution.png
-    ├── purchase_vs_age.png
-    ├── roc_comparison.png
-    ├── shap_beeswarm_plot.png
-    ├── shap_global_bar_plot.png
-    └── shap_waterfall_plot.png
-                # Visualizations (EDA, SHAP)
->>>>>>> task-3
-│   └── models/                 # Saved ML models (e.g., XGBoost)
+├── data/
 ├── notebooks/
-│   ├── task-1-preprocessing.ipynb
-│   ├── task-2-model-training.ipynb
-│   └── task-3-model-interpretability.ipynb
+├── outputs/
+│ └── figures/
+│ └── models/
+├── src/
 ├── requirements.txt
 └── README.md
 
-🧪 Dataset Overview
-We worked with three key datasets:
 
-Fraud_Data.csv: Core user transaction dataset (151,112 rows)
+---
 
-IpAddress_to_Country.csv: IP address ranges to countries
+## 📌 Objectives
 
-creditcard.csv: External credit card fraud dataset (used for model generalization)
+- Preprocess and analyze transactional data
+- Build and evaluate fraud detection models
+- Interpret model behavior using SHAP
+- Recommend the best-performing model
 
-✅ Task 1: Data Cleaning & Feature Engineering
-Removed duplicates, missing values, and standardized data types.
+---
 
-Extracted time-based features (signup/purchase deltas).
+## 🧪 Datasets
 
-Merged IP address data to enrich with country info.
+- `Fraud_Data.csv`
+- `IpAddress_to_Country.csv`
+- `creditcard.csv` (for extended modeling)
 
-Applied SMOTE to address class imbalance.
+---
 
-smote = SMOTE(random_state=42)
-X_train_resampled, y_train_resampled = smote.fit_resample(X_train, y_train)
+## 📊 Task 1 – Exploratory Data Analysis (EDA)
 
-SMOTE Distribution:
+### 🔹 Univariate & Bivariate Plots
 
-<<<<<<< HEAD
-Class	Count (After SMOTE)
-0	109,568
-1	109,568
+![Age Distribution](https://raw.githubusercontent.com/restinbark/fraud_detection_project/main/outputs/figures/age_distribution.png)  
+![Purchase Value vs Age](https://raw.githubusercontent.com/restinbark/fraud_detection_project/main/outputs/figures/purchase_vs_age.png)
 
-=======
-SMOTE Distribution:
+### 🔹 Insights
 
-Class	Count (After SMOTE)
-0	109,568
-1	109,568
->>>>>>> task-3
-### 📈 Univariate & Bivariate Analysis
+- Majority of users fall between ages 25–40
+- Fraud distribution varies across device/browser/source
+- Class imbalance confirmed: many more legitimate transactions than fraudulent ones
 
-![Age Distribution](../outputs/figures/age_distribution.png)
-![Purchase Value vs Age](../outputs/figures/purchase_vs_age.png)
+---
 
-<<<<<<< HEAD
-🤖 Task 2: Model Training & Evaluation
-We trained three models:
+## ⚙️ Task 2 – Model Training & Evaluation
 
-Logistic Regression
+### 🧹 Preprocessing
 
-Random Forest
+- Missing value check: None
+- Label encoding for categorical variables
+- SMOTE applied to address class imbalance
 
-XGBoost
+### 🔍 Models Trained
 
-Performance Comparison:
+- Logistic Regression
+- Random Forest
+- XGBoost
 
-Metric	Logistic Reg	Random Forest	XGBoost
-Precision (1)	0.19	0.82	0.91
-Recall (1)	0.59	0.53	0.53
-F1-Score (1)	0.29	0.65	0.67
-Accuracy	73%	95%	95%
-ROC-AUC	0.70	0.78	0.76
+### 📈 Performance Comparison
 
-✅ Final Model Chosen: XGBoost for its higher precision and interpretability compatibility.
-### 📊 Confusion Matrices
+| Model               | Accuracy | Precision | Recall | F1-score | ROC AUC |
+|---------------------|----------|-----------|--------|----------|---------|
+| Logistic Regression | 0.73     | 0.19      | 0.59   | 0.29     | 0.70    |
+| Random Forest       | 0.95     | 0.82      | 0.53   | 0.65     | 0.77    |
+| XGBoost             | 0.95     | 0.91      | 0.53   | 0.67     | 0.76    |
 
-![XGBoost Confusion Matrix](../outputs/figures/xgb_confusion_matrix.png)
+> ✅ **XGBoost** performed best in terms of precision and F1-score — critical for fraud detection where false negatives are costly.
 
-### 🧮 ROC Curve Comparison
+---
 
-![ROC Curves](../outputs/figures/roc_comparison.png)
+## 🧠 Task 3 – Model Interpretability (SHAP)
 
+### 🔹 SHAP Plots
 
-📊 Task 3: Model Interpretability with SHAP
-We used SHAP to interpret feature contributions in the XGBoost model.
+![SHAP Beeswarm](https://raw.githubusercontent.com/restinbark/fraud_detection_project/main/outputs/figures/shap_beeswarm_plot.png)  
+![SHAP Global Bar Plot](https://raw.githubusercontent.com/restinbark/fraud_detection_project/main/outputs/figures/shap_global_bar_plot.png)  
+![SHAP Waterfall](https://raw.githubusercontent.com/restinbark/fraud_detection_project/main/outputs/figures/shap_waterfall_plot.png)
 
-📌 Key Interpretations:
+### 🔹 SHAP Insights
 
-Most influential features: purchase_value, age, time_delta, and country.
+- Age, browser type, and IP address range significantly influence fraud predictions.
+- SHAP confirms that engineered features such as device ID frequency also play a strong role.
 
-SHAP beeswarm and waterfall plots revealed high fraud impact zones.
+---
 
-Figures:
+## ✅ Final Recommendation
 
-### 🧠 SHAP Interpretability
+We recommend deploying the **XGBoost model** for fraud detection due to its:
 
-- **Beeswarm Plot** – Global impact
-  ![SHAP Beeswarm](../outputs/figures/shap_beeswarm_plot.png)
+- High **precision** (91%) — reducing false positives
+- Balanced **recall** and **F1-score**
+- Interpretability with SHAP for transparent decision-making
 
-- **Global Feature Importance**
-  ![SHAP Global Bar](../outputs/figures/shap_global_bar_plot.png)
+---
 
-- **Individual Prediction Example**
-  ![SHAP Waterfall](../outputs/figures/shap_waterfall_plot.png)
+## 📦 Requirements
 
-
-ℹ️ Visuals are saved under /outputs/figures/
-
-💾 Requirements
-Install dependencies with:
-
+```bash
 pip install -r requirements.txt
 
-🙌 Contributors
-Barkilign Mulatu — Data Scientist & ML Engineer
-
-📌 Final Recommendation
-Use the XGBoost model in production with interpretability support from SHAP. Continue periodic retraining with new fraud patterns.
-
-
-=======
-
-🤖 Task 2: Model Training & Evaluation
-We trained three models:
-
-Logistic Regression
-
-Random Forest
-
-XGBoost
-
-Performance Comparison:
-
-Metric	Logistic Reg	Random Forest	XGBoost
-Precision (1)	0.19	0.82	0.91
-Recall (1)	0.59	0.53	0.53
-F1-Score (1)	0.29	0.65	0.67
-Accuracy	73%	95%	95%
-ROC-AUC	0.70	0.78	0.76
-
-✅ Final Model Chosen: XGBoost for its higher precision and interpretability compatibility.
-### 📊 Confusion Matrices
-
-![XGBoost Confusion Matrix](../outputs/figures/xgb_confusion_matrix.png)
-
-### 🧮 ROC Curve Comparison
-
-![ROC Curves](../outputs/figures/roc_comparison.png)
-
-
-📊 Task 3: Model Interpretability with SHAP
-We used SHAP to interpret feature contributions in the XGBoost model.
-
-📌 Key Interpretations:
-
-Most influential features: purchase_value, age, time_delta, and country.
-
-SHAP beeswarm and waterfall plots revealed high fraud impact zones.
-
-ℹ️ Visuals are saved under /outputs/figures/
-
-Figures:
-### 🧠 SHAP Interpretability
-
-- **Beeswarm Plot** – Global impact
-  ![SHAP Beeswarm](../outputs/figures/shap_beeswarm_plot.png)
-
-- **Global Feature Importance**
-  ![SHAP Global Bar](../outputs/figures/shap_global_bar_plot.png)
-
-- **Individual Prediction Example**
-  ![SHAP Waterfall](../outputs/figures/shap_waterfall_plot.png)
-
-
-💾 Requirements
-Install dependencies with:
-pip install -r requirements.txt
-
-🙌 Contributors
-Barkilign Mulatu — Data Scientist & ML Engineer
-
-📌 Final Recommendation
-Use the XGBoost model in production with interpretability support from SHAP. Continue periodic retraining with new fraud patterns.
->>>>>>> task-3
+👨‍💻 Author
+Barkilign Mulatu 
