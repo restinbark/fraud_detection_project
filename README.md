@@ -1,147 +1,126 @@
-# Fraud Detection for E-commerce and Bank Transactions
+# 🕵️‍♂️ Fraud Detection Using Machine Learning & SHAP
 
-## 📌 Overview
-
-This project aims to detect fraudulent transactions in both **e-commerce** and **bank credit card** environments using machine learning. The focus during Interim 1 is on **Task 1: Data Analysis and Preprocessing**.
-
-We work with two real-world datasets:
-
-* **E-commerce Transactions:** Fraud detection using behavioral, temporal, and geolocation features.
-* **Bank Transactions:** PCA-transformed credit card data from Kaggle.
-
-Our preprocessing ensures that the final data is suitable for training robust and interpretable fraud detection models.
+This project tackles the problem of fraud detection using transaction and behavioral data. We preprocess the data, engineer features, apply class balancing (SMOTE), train and compare multiple models, and interpret predictions using SHAP (SHapley Additive exPlanations).
 
 ---
 
-## 🧾 Datasets Used
+## 📁 Project Structure
 
-| File                       | Description                                                            |
-| -------------------------- | ---------------------------------------------------------------------- |
-| `Fraud_Data.csv`           | E-commerce transactions including timestamps, user/device/browser info |
-| `creditcard.csv`           | Credit card transactions with anonymized PCA features                  |
-| `IpAddress_to_Country.csv` | Mapping of IP ranges to countries                                      |
+```bash
+fraud_detection_project/
+│
+├── data/                        # Raw input data
+├── outputs/
+│   ├── data/                    # Cleaned and processed datasets
+│   ├── figures/ outputs/
+└── figures/
+    ├── age_distribution.png
+    ├── purchase_vs_age.png
+    ├── roc_comparison.png
+    ├── shap_beeswarm_plot.png
+    ├── shap_global_bar_plot.png
+    └── shap_waterfall_plot.png
+                # Visualizations (EDA, SHAP)
+│   └── models/                 # Saved ML models (e.g., XGBoost)
+├── notebooks/
+│   ├── task-1-preprocessing.ipynb
+│   ├── task-2-model-training.ipynb
+│   └── task-3-model-interpretability.ipynb
+├── requirements.txt
+└── README.md
 
----
+🧪 Dataset Overview
+We worked with three key datasets:
 
-## ⚙️ Task 1: Data Analysis and Preprocessing
+Fraud_Data.csv: Core user transaction dataset (151,112 rows)
 
-### ✅ 1. Data Loading & Cleaning
+IpAddress_to_Country.csv: IP address ranges to countries
 
-* Checked all three datasets for null values → none found.
-* Converted timestamp fields (`signup_time`, `purchase_time`) to datetime.
-* Converted `ip_address` from float to integer for geolocation mapping.
-* Removed duplicates.
+creditcard.csv: External credit card fraud dataset (used for model generalization)
 
----
+✅ Task 1: Data Cleaning & Feature Engineering
+Removed duplicates, missing values, and standardized data types.
 
-### 📊 2. Exploratory Data Analysis (EDA)
+Extracted time-based features (signup/purchase deltas).
 
-* **Class Imbalance:** \~1–2% of transactions are fraudulent.
-* **User Age Distribution:** Most users are between 25–40 years.
-* **Purchase Value:** Right-skewed, with higher values associated with fraud.
-* **Categorical Insights:** Certain browsers/sources are more fraud-prone.
+Merged IP address data to enrich with country info.
 
-#### 🖼️ Univariate Analysis Plots
-
-* ![Class Distribution](outputs/figures/univariate_class_distribution.png)
-* ![Age Distribution](outputs/figures/univariate_age.png)
-* ![Purchase Value](outputs/figures/univariate_purchase_value.png)
-* ![Source & Browser](outputs/figures/univariate_source_browser.png)
-
-#### 🖼️ Bivariate Analysis Plots
-
-* ![Purchase Value by Class](outputs/figures/bivariate_purchase_value_by_class.png)
-* ![Age by Class](outputs/figures/bivariate_age_by_class.png)
-* ![Fraud Ratio by Browser](outputs/figures/bivariate_fraud_by_browser.png)
-
----
-
-### 🧠 3. Feature Engineering
-
-Added several predictive features:
-
-* `hour_of_day` → Purchase time (hour)
-* `day_of_week` → Purchase weekday
-* `time_since_signup` → Time delta in hours
-* `transaction_count` → Frequency of user activity
-* `country` → Extracted from IP ranges via merge with `IpAddress_to_Country.csv`
-
----
-
-### 🔄 4. Data Transformation
-
-* **Categorical Encoding:** One-hot encoded `browser`, `source`, `sex`, `country`
-* **Scaling:** Standardized numerical columns like `purchase_value`, `age`, `transaction_count`
-* **Train-Test Split:** Stratified split (80/20)
-* **Class Imbalance Handling:** Applied **SMOTE** to training data to balance classes
-
-```python
-from imblearn.over_sampling import SMOTE
+Applied SMOTE to address class imbalance.
 
 smote = SMOTE(random_state=42)
 X_train_resampled, y_train_resampled = smote.fit_resample(X_train, y_train)
-```
 
-After resampling:
+SMOTE Distribution:
 
-* Fraud and legit transactions are **perfectly balanced**: 109,568 each.
-* Ready for Task 2: Model training.
+SMOTE Distribution:
 
----
+Class	Count (After SMOTE)
+0	109,568
+1	109,568
+### 📈 Univariate & Bivariate Analysis
 
-## 📁 Folder Structure
+![Age Distribution](outputs/figures/age_distribution.png)
+![Purchase Value vs Age](outputs/figures/purchase_vs_age.png)
 
-```
-fraud_detection_project/
-│
-├── data/
-│   ├── Fraud_Data.csv
-│   ├── creditcard.csv
-│   └── IpAddress_to_Country.csv
-│
-├── notebooks/
-│   └── 01_data_analysis_preprocessing.ipynb
-│
-├── outputs/
-│   ├── figures/         # Plots and charts from EDA
-│   └── models/          # (to be filled in Task 2)
-│
-├── requirements.txt
-├── README.md
-└── .gitignore
-```
 
----
+🤖 Task 2: Model Training & Evaluation
+We trained three models:
 
-## 📌 Key Tools and Libraries
+Logistic Regression
 
-* `pandas`, `numpy`
-* `matplotlib`, `seaborn`
-* `scikit-learn`
-* `imbalanced-learn`
-* `ipaddress` (for IP-to-int conversion)
+Random Forest
 
----
+XGBoost
 
-## 🧠 What’s Next (Task 2)
+Performance Comparison:
 
-* Train two models: **Logistic Regression** and **Random Forest/XGBoost**
-* Evaluate on:
+Metric	Logistic Reg	Random Forest	XGBoost
+Precision (1)	0.19	0.82	0.91
+Recall (1)	0.59	0.53	0.53
+F1-Score (1)	0.29	0.65	0.67
+Accuracy	73%	95%	95%
+ROC-AUC	0.70	0.78	0.76
 
-  * F1-score
-  * ROC-AUC
-  * AUC-PR
-* Select the best model for SHAP interpretation (Task 3)
+✅ Final Model Chosen: XGBoost for its higher precision and interpretability compatibility.
+### 📊 Confusion Matrices
 
----
+![XGBoost Confusion Matrix](outputs/figures/xgb_confusion_matrix.png)
 
-## 🔗 Repository Checklist
+### 🧮 ROC Curve Comparison
 
-* [x] README with EDA image placeholders
-* [x] Clean, commented Jupyter notebook for Task 1
-* [x] `.gitignore` excludes `/data`
-* [x] `requirements.txt` lists key packages
+![ROC Curves](outputs/figures/roc_comparison.png)
 
----
 
-**Maintained by:** Barkilign Mulatu ✨
+📊 Task 3: Model Interpretability with SHAP
+We used SHAP to interpret feature contributions in the XGBoost model.
+
+📌 Key Interpretations:
+
+Most influential features: purchase_value, age, time_delta, and country.
+
+SHAP beeswarm and waterfall plots revealed high fraud impact zones.
+
+ℹ️ Visuals are saved under /outputs/figures/
+
+Figures:
+### 🧠 SHAP Interpretability
+
+- **Beeswarm Plot** – Global impact
+  ![SHAP Beeswarm](outputs/figures/shap_beeswarm_plot.png)
+
+- **Global Feature Importance**
+  ![SHAP Global Bar](outputs/figures/shap_global_bar_plot.png)
+
+- **Individual Prediction Example**
+  ![SHAP Waterfall](outputs/figures/shap_waterfall_plot.png)
+
+
+💾 Requirements
+Install dependencies with:
+pip install -r requirements.txt
+
+🙌 Contributors
+Barkilign Mulatu — Data Scientist & ML Engineer
+
+📌 Final Recommendation
+Use the XGBoost model in production with interpretability support from SHAP. Continue periodic retraining with new fraud patterns.
