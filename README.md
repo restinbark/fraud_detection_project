@@ -59,8 +59,8 @@ Class	Count (After SMOTE)
 1	109,568
 ### 📈 Univariate & Bivariate Analysis
 
-![Age Distribution](outputs/figures/age_distribution.png)
-![Purchase Value vs Age](outputs/figures/purchase_vs_age.png)
+![Age Distribution](../outputs/figures/age_distribution.png)
+![Purchase Value vs Age](../outputs/figures/purchase_vs_age.png)
 
 
 🤖 Task 2: Model Training & Evaluation
@@ -84,11 +84,11 @@ ROC-AUC	0.70	0.78	0.76
 ✅ Final Model Chosen: XGBoost for its higher precision and interpretability compatibility.
 ### 📊 Confusion Matrices
 
-![XGBoost Confusion Matrix](outputs/figures/xgb_confusion_matrix.png)
+![XGBoost Confusion Matrix](../outputs/figures/xgb_confusion_matrix.png)
 
 ### 🧮 ROC Curve Comparison
 
-![ROC Curves](outputs/figures/roc_comparison.png)
+![ROC Curves](../outputs/figures/roc_comparison.png)
 
 
 📊 Task 3: Model Interpretability with SHAP
@@ -106,13 +106,13 @@ Figures:
 ### 🧠 SHAP Interpretability
 
 - **Beeswarm Plot** – Global impact
-  ![SHAP Beeswarm](outputs/figures/shap_beeswarm_plot.png)
+  ![SHAP Beeswarm](../outputs/figures/shap_beeswarm_plot.png)
 
 - **Global Feature Importance**
-  ![SHAP Global Bar](outputs/figures/shap_global_bar_plot.png)
+  ![SHAP Global Bar](../outputs/figures/shap_global_bar_plot.png)
 
 - **Individual Prediction Example**
-  ![SHAP Waterfall](outputs/figures/shap_waterfall_plot.png)
+  ![SHAP Waterfall](../outputs/figures/shap_waterfall_plot.png)
 
 
 💾 Requirements
