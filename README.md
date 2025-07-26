@@ -12,7 +12,19 @@ fraud_detection_project/
 ├── data/                        # Raw input data
 ├── outputs/
 │   ├── data/                    # Cleaned and processed datasets
+<<<<<<< HEAD
 │   ├── figures/                 # Visualizations (EDA, SHAP)
+=======
+│   ├── figures/ outputs/
+└── figures/
+    ├── age_distribution.png
+    ├── purchase_vs_age.png
+    ├── roc_comparison.png
+    ├── shap_beeswarm_plot.png
+    ├── shap_global_bar_plot.png
+    └── shap_waterfall_plot.png
+                # Visualizations (EDA, SHAP)
+>>>>>>> task-3
 │   └── models/                 # Saved ML models (e.g., XGBoost)
 ├── notebooks/
 │   ├── task-1-preprocessing.ipynb
@@ -44,15 +56,24 @@ X_train_resampled, y_train_resampled = smote.fit_resample(X_train, y_train)
 
 SMOTE Distribution:
 
+<<<<<<< HEAD
 Class	Count (After SMOTE)
 0	109,568
 1	109,568
 
+=======
+SMOTE Distribution:
+
+Class	Count (After SMOTE)
+0	109,568
+1	109,568
+>>>>>>> task-3
 ### 📈 Univariate & Bivariate Analysis
 
 ![Age Distribution](../outputs/figures/age_distribution.png)
 ![Purchase Value vs Age](../outputs/figures/purchase_vs_age.png)
 
+<<<<<<< HEAD
 🤖 Task 2: Model Training & Evaluation
 We trained three models:
 
@@ -118,3 +139,67 @@ Barkilign Mulatu — Data Scientist & ML Engineer
 Use the XGBoost model in production with interpretability support from SHAP. Continue periodic retraining with new fraud patterns.
 
 
+=======
+
+🤖 Task 2: Model Training & Evaluation
+We trained three models:
+
+Logistic Regression
+
+Random Forest
+
+XGBoost
+
+Performance Comparison:
+
+Metric	Logistic Reg	Random Forest	XGBoost
+Precision (1)	0.19	0.82	0.91
+Recall (1)	0.59	0.53	0.53
+F1-Score (1)	0.29	0.65	0.67
+Accuracy	73%	95%	95%
+ROC-AUC	0.70	0.78	0.76
+
+✅ Final Model Chosen: XGBoost for its higher precision and interpretability compatibility.
+### 📊 Confusion Matrices
+
+![XGBoost Confusion Matrix](../outputs/figures/xgb_confusion_matrix.png)
+
+### 🧮 ROC Curve Comparison
+
+![ROC Curves](../outputs/figures/roc_comparison.png)
+
+
+📊 Task 3: Model Interpretability with SHAP
+We used SHAP to interpret feature contributions in the XGBoost model.
+
+📌 Key Interpretations:
+
+Most influential features: purchase_value, age, time_delta, and country.
+
+SHAP beeswarm and waterfall plots revealed high fraud impact zones.
+
+ℹ️ Visuals are saved under /outputs/figures/
+
+Figures:
+### 🧠 SHAP Interpretability
+
+- **Beeswarm Plot** – Global impact
+  ![SHAP Beeswarm](../outputs/figures/shap_beeswarm_plot.png)
+
+- **Global Feature Importance**
+  ![SHAP Global Bar](../outputs/figures/shap_global_bar_plot.png)
+
+- **Individual Prediction Example**
+  ![SHAP Waterfall](../outputs/figures/shap_waterfall_plot.png)
+
+
+💾 Requirements
+Install dependencies with:
+pip install -r requirements.txt
+
+🙌 Contributors
+Barkilign Mulatu — Data Scientist & ML Engineer
+
+📌 Final Recommendation
+Use the XGBoost model in production with interpretability support from SHAP. Continue periodic retraining with new fraud patterns.
+>>>>>>> task-3
