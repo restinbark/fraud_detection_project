@@ -45,9 +45,9 @@ yaml
 
 | Plot Title                    | Preview |
 |------------------------------|---------|
-| Age Distribution             | ![Age Distribution](outputs/figures/age_distribution.png) |
-| Purchase Value vs Age        | ![Purchase Value vs Age](outputs/figures/purchase_vs_age.png) |
-| Time Difference Distribution | ![Time Difference](outputs/figures/time_diff_distribution.png) |
+| Age Distribution             | ![Age Distribution](../outputs/figures/age_distribution.png) |
+| Purchase Value vs Age        | ![Purchase Value vs Age](../outputs/figures/purchase_vs_age.png) |
+| Time Difference Distribution | ![Time Difference](../outputs/figures/time_diff_distribution.png) |
 
 ---
 
