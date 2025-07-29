@@ -28,10 +28,19 @@ yaml
 
 ## ✅ Objectives
 
-- Analyze transactional behavior to detect fraud
-- Train and evaluate models (Logistic Regression, Random Forest, XGBoost)
-- Use SHAP to interpret model decisions
-- Recommend the best model for deployment
+✅ Objectives
+
+- Detect fraudulent activity through machine learning models
+
+- Explore and visualize transaction data using EDA
+
+- Clean, transform, and feature-engineer datasets
+
+- Train and evaluate Logistic Regression, Random Forest, and XGBoost
+
+- Interpret predictions using SHAP values
+
+- Recommend the most effective model based on evaluation metrics
 
 ---
 
