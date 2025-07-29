@@ -8,18 +8,18 @@ A supervised machine learning project designed to detect fraudulent activity usi
 ## 📁 Project Structure
 
 fraud_detection_project/
-│
-├── data/ # Raw datasets
+├── data/                     # Raw datasets
 ├── outputs/
-│ └── figures/ # Saved plots (EDA, models, SHAP)
-│ └── data/ # Preprocessed CSVs (used in training)
+│   ├── figures/              # Saved plots (EDA, models, SHAP)
+│   └── data/                 # Preprocessed data for modeling
 ├── notebooks/
-│ ├── task_1_eda.ipynb # EDA + preprocessing
-│ ├── task_2_modeling.ipynb # Model training and evaluation
-│ ├── task_3_shap.ipynb # Interpretability
-├── models/ # Trained model files
-├── requirements.txt
-└── README.md # Project documentation
+│   ├── task_1_eda.ipynb      # Exploratory Data Analysis and preprocessing
+│   ├── task_2_modeling.ipynb # Model training and evaluation
+│   └── task_3_shap.ipynb     # Model interpretability using SHAP
+├── models/                   # Trained model binaries (.pkl, .joblib)
+├── requirements.txt          # Python dependencies
+└── README.md                 # Project documentation
+
 
 yaml
 
@@ -28,7 +28,6 @@ yaml
 
 ## ✅ Objectives
 
-✅ Objectives
 
 - Detect fraudulent activity through machine learning models
 
